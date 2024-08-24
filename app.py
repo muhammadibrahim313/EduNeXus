@@ -3,7 +3,8 @@ import streamlit as st
 from groq import Groq
 
 # Set the Groq API key
-os.environ["GROQ_API_KEY"] = "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"
+
+os.environ["GROQ_API_KEY"] == st.secrets["API_KEY"]
 
 # Initialize Groq client
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
