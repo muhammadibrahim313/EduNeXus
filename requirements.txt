@@ -1,0 +1,4 @@
+Streamlit
+Groq
+torch
+transformers
