@@ -3,11 +3,10 @@ import streamlit as st
 from groq import Groq
 
 # Set the Groq API key
+api_key = st.secrets["GROQ_API_KEY"]
 
-os.environ["GROQ_API_KEY"] == st.secrets["API_KEY"]
-
-# Initialize Groq client
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+# Initialize the Groq client using the API key
+client = Groq(api_key=api_key)
 
 # Define the LLaMA model to be used
 MODEL_NAME = "llama3-8b-8192"
