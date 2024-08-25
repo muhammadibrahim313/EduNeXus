@@ -302,9 +302,9 @@ elif selected_task == "💬 Mental Health Check-In":
 # Footer with contact information
 st.markdown("""
     <div class="footer">
-        <a href="https://github.com/your-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="https://linkedin.com/in/your-linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <a href="https://github.com/your-partner-github" target="_blank"><i class="fab fa-github"></i> Partner's GitHub</a>
-        <a href="https://linkedin.com/in/your-partner-linkedin" target="_blank"><i class="fab fa-linkedin"></i> Partner's LinkedIn</a>
+        <a href="https://github.com/muhammadibrahim313" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://www.linkedin.com/in/muhammad-ibrahim-qasmi-9876a1297/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/Ahmad-Fakhar" target="_blank"><i class="fab fa-github"></i> Partner's GitHub</a>
+        <a href="https://www.linkedin.com/in/ahmad-fakhar-357742258/" target="_blank"><i class="fab fa-linkedin"></i> Partner's LinkedIn</a>
     </div>
 """, unsafe_allow_html=True)
