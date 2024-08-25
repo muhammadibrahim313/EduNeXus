@@ -138,7 +138,7 @@ st.markdown("""
         color: #000000; /* Black text */
     }
     .light-theme .stButton button {
-        background-color: #1f316f; /* Navy blue button */
+        background-color: #e3c1e0 /* Navy blue button */
         color: #ffffff; /* White button text */
     }
     .light-theme .stButton button:hover {
@@ -146,7 +146,7 @@ st.markdown("""
     }
     .light-theme .stTextInput, .light-theme .stTextArea {
         background-color: #ffffff; /* White input background */
-        color: #000000; /* Black input text */
+        color: #e3c1e0; /* Black input text */
     }
     .light-theme .footer {
         background-color: #f6eacb; /* Cream footer background */
