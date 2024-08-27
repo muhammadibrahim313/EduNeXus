@@ -5,11 +5,8 @@ from groq import Groq
 # Set up page configuration
 st.set_page_config(page_title="Edu Nexus 📖", page_icon=":book:", layout="wide")
 
-# Set the Groq API key
-os.environ["GROQ_API_KEY"] = "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"  # Replace with your actual API key
-
-# Initialize Groq client
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+api_key = st.secrets["GROQ_API_KEY"]
+client = Groq(api_key=api_key)
 
 # Define the LLaMA model to be used
 MODEL_NAME = "llama3-8b-8192"  # Replace with your actual model name
