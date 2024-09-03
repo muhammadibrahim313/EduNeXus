@@ -1,11 +1,9 @@
 import streamlit as st
 import os
 from groq import Groq
-from streamlit.components.v1 import html
-import random
 
 # Set up page configuration
-st.set_page_config(page_title="EduNexus 🚀", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="Edu Nexus 📖", page_icon=":book:", layout="wide")
 
 api_key = st.secrets["GROQ_API_KEY"]
 client = Groq(api_key=api_key)
@@ -24,24 +22,65 @@ def call_groq_api(prompt):
     except Exception as e:
         return f"Error: {str(e)}"
 
-# Define functions for each tool with few-shot examples (unchanged)
+# Define functions for each tool with few-shot examples
 def personalized_learning_assistant(topic):
-    # ... (unchanged)
+    prompt = f"""
+    Provide a personalized learning plan for the topic: {topic}.
+    Example 1: For 'Machine Learning': 'Create a plan with courses on supervised learning, unsupervised learning, and neural networks. Include practical exercises and projects.'
+    Example 2: For 'Data Science': 'Suggest a plan with a focus on data analysis, visualization, and statistical modeling. Recommend tools like Python, R, and SQL.'
+    Example 3: For 'Web Development': 'Outline a plan that covers front-end and back-end development, including HTML, CSS, JavaScript, and server-side technologies.'
+    Example 4: For '{topic}':"""
+    return call_groq_api(prompt)
 
 def ai_coding_mentor(code_snippet):
-    # ... (unchanged)
+    prompt = f"""
+    Review this AI code snippet and provide suggestions or improvements:
+    {code_snippet}
+    Example 1: 'In the provided code, consider using a different activation function to improve performance.'
+    Example 2: 'The code can be optimized by reducing redundant calculations and enhancing readability.'
+    Example 3: 'Add comments to explain complex sections of the code for better understanding.'
+    Example 4: 'For the provided snippet, suggest improvements or fixes:"""
+    return call_groq_api(prompt)
 
 def smart_document_summarizer(document_text):
-    # ... (unchanged)
+    prompt = f"""
+    Summarize the following document:
+    {document_text}
+    Example 1: 'The document discusses the impact of climate change on global agriculture, emphasizing the need for sustainable practices.'
+    Example 2: 'It provides an overview of recent advancements in AI technology and its applications in various fields.'
+    Example 3: 'The text outlines the historical development of renewable energy sources and their future potential.'
+    Example 4: 'Summarize this document:"""
+    return call_groq_api(prompt)
 
 def interactive_study_planner(exam_schedule):
-    # ... (unchanged)
+    prompt = f"""
+    Create an interactive study plan based on this exam schedule:
+    {exam_schedule}
+    Example 1: 'For an exam schedule with subjects A, B, and C, create a plan that allocates study time for each subject and includes breaks.'
+    Example 2: 'Plan should include daily study goals and revision sessions leading up to the exams.'
+    Example 3: 'Suggest a study plan that balances subject preparation with relaxation to avoid burnout.'
+    Example 4: 'Based on the provided schedule, create a study plan:"""
+    return call_groq_api(prompt)
 
 def real_time_qa_support(question):
-    # ... (unchanged)
+    prompt = f"""
+    Provide an answer to the following academic question:
+    {question}
+    Example 1: 'Question: What is the capital of France? Answer: Paris.'
+    Example 2: 'Question: Explain the theory of relativity. Answer: The theory of relativity, developed by Albert Einstein, includes two theories: special relativity and general relativity, explaining the relationship between space, time, and gravity.'
+    Example 3: 'Question: What is the process of photosynthesis? Answer: Photosynthesis is the process by which green plants use sunlight to synthesize foods with the help of chlorophyll, water, and carbon dioxide.'
+    Example 4: 'Answer this question:"""
+    return call_groq_api(prompt)
 
 def mental_health_check_in(feelings):
-    # ... (unchanged)
+    prompt = f"""
+    Provide some advice based on these feelings:
+    {feelings}
+    Example 1: 'Feeling stressed? Try practicing mindfulness and deep breathing exercises to calm your mind.'
+    Example 2: 'If you're feeling anxious, consider talking to a trusted friend or counselor for support.'
+    Example 3: 'Feeling overwhelmed? Break your tasks into smaller steps and focus on completing them one at a time.'
+    Example 4: 'Based on these feelings, provide advice:"""
+    return call_groq_api(prompt)
 
 # Initialize session state if not already set
 if 'responses' not in st.session_state:
@@ -62,143 +101,92 @@ def clear_session_state():
         if key in ['personalized_learning_assistant', 'ai_coding_mentor', 'smart_document_summarizer', 'interactive_study_planner', 'real_time_qa_support', 'mental_health_check_in']:
             st.session_state[key] = ""
 
-# Function to load custom CSS
-def load_css():
-    return """
+# Inject CSS
+st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-    
+    /* Common Styles for Both Themes */
     body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #ffffff;
+        font-family: 'Arial', sans-serif;
     }
-    
-    .stApp {
-        background-color: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 2rem;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    .stButton button {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        border: 2px solid #1f316f;
     }
-    
-    .main-title {
-        font-size: 3.5rem;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 2rem;
-        color: #ffffff;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    .stTextInput, .stTextArea {
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: 2px solid #1f316f;
     }
-    
-    .stButton > button {
-        background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-        color: white;
-        border: none;
-        border-radius: 30px;
-        padding: 0.6rem 1.2rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    
-    .stButton > button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-    }
-    
-    .stTextInput > div > div > input,
-    .stTextArea > div > div > textarea {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: 2px solid rgba(255, 255, 255, 0.5);
-        border-radius: 10px;
-        color: #ffffff;
-        font-size: 1rem;
-    }
-    
-    .stRadio > div {
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-        padding: 1rem;
-    }
-    
-    .stRadio > div > label {
-        color: #ffffff !important;
-    }
-    
     .footer {
         text-align: center;
         padding: 1rem;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        margin-top: 2rem;
+        border-top: 2px solid #1f316f;
     }
-    
     .footer a {
-        color: #ffffff;
-        text-decoration: none;
         margin: 0 1rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
+        text-decoration: none;
+        font-weight: bold;
     }
-    
-    .footer a:hover {
-        color: #4ECDC4;
+
+    /* Light Theme */
+    .light-theme {
+        background-color: #ffffff; /* Light background */
+        color: #000000; /* Black text */
     }
-    
-    /* Animated background */
-    @keyframes gradientBG {
-        0% {background-position: 0% 50%;}
-        50% {background-position: 100% 50%;}
-        100% {background-position: 0% 50%;}
+    .light-theme .stButton button {
+        background-color: #e3c1e0 /* Navy blue button */
+        color: #ffffff; /* White button text */
     }
-    
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-        z-index: -1;
+    .light-theme .stButton button:hover {
+        background-color: #0d1b3f; /* Darker navy blue on hover */
     }
-    
-    /* 3D Card Effect */
-    .tool-card {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-        transition: all 0.3s ease;
-        transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    .light-theme .stTextInput, .light-theme .stTextArea {
+        background-color: #ffffff; /* White input background */
+        color: #e3c1e0; /* Black input text */
     }
-    
-    .tool-card:hover {
-        transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
-        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    .light-theme .footer {
+        background-color: #f6eacb; /* Cream footer background */
+        color: #000000; /* Black footer text */
     }
-    
-    /* Emoji styles */
-    .emoji {
-        font-size: 2rem;
-        margin-right: 0.5rem;
+    .light-theme .footer a {
+        color: #1f316f; /* Navy blue footer links */
+    }
+    .light-theme .footer a:hover {
+        color: #0d1b3f; /* Darker navy blue on hover */
+    }
+
+    /* Dark Theme */
+    .dark-theme {
+        background-color: #1e1e2f; /* Dark background */
+        color: #ffffff; /* White text */
+    }
+    .dark-theme .stButton button {
+        background-color: #eecad5; /* Light pink button */
+        color: #000000; /* Black button text */
+    }
+    .dark-theme .stButton button:hover {
+        background-color: #cba9b3; /* Darker pink on hover */
+    }
+    .dark-theme .stTextInput, .dark-theme .stTextArea {
+        background-color: #2e2e3e; /* Dark input background */
+        color: #ffffff; /* White input text */
+    }
+    .dark-theme .footer {
+        background-color: #eecad5; /* Light pink footer background */
+        color: #ffffff; /* Black footer text */
+    }
+    .dark-theme .footer a {
+        color: #ffffff ; /* Black footer links */
+    }
+    .dark-theme .footer a:hover {
+        color: #cba9b3; /* Darker pink on hover */
     }
     </style>
-    """
-
-# Inject custom CSS
-st.markdown(load_css(), unsafe_allow_html=True)
-
-# Main content area with 3D-inspired title
-st.markdown("<h1 class='main-title'>🚀 Welcome to EduNexus</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; font-size: 1.2rem; margin-bottom: 2rem;'>Your AI-powered learning companion for the 21st century</p>", unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Sidebar with navigation options
-st.sidebar.markdown("<h2 style='text-align: center;'>🧠 EduNexus Tools</h2>", unsafe_allow_html=True)
+st.sidebar.title("Edu Nexus 📖")
 selected_task = st.sidebar.radio("Select a Tool", [
     "🧑‍🎓 Personalized Learning Assistant",
     "🤖 AI Coding Mentor",
@@ -208,198 +196,112 @@ selected_task = st.sidebar.radio("Select a Tool", [
     "💬 Mental Health Check-In"
 ])
 
-# Display the selected task based on user selection
-st.markdown(f"<h2 class='tool-title'>{selected_task}</h2>", unsafe_allow_html=True)
+# Main content area
+st.title(f"Welcome to Edu Nexus 📖 - {selected_task}")
 
+# Display the selected task based on user selection
 if selected_task == "🧑‍🎓 Personalized Learning Assistant":
-    st.markdown("""
-    <div class='tool-card'>
-        <h3><span class='emoji'>🎓</span>Create Your Learning Journey</h3>
-        <p>Enter a topic you're interested in, and let our AI craft a personalized learning plan just for you!</p>
-    </div>
-    """, unsafe_allow_html=True)
-    topic = st.text_input("What would you like to learn about? 🤔")
+    topic = st.text_input("Enter the topic of interest:")
     col1, col2 = st.columns([1, 3])
     with col1:
-        if st.button("🧹 Clear"):
+        if st.button("Clear"):
             st.session_state['responses']["personalized_learning_assistant"] = ""
             st.rerun()
     with col2:
-        if st.button("🚀 Generate Learning Plan"):
+        if st.button("Generate Learning Plan"):
             if topic:
-                with st.spinner("Crafting your personalized learning journey..."):
-                    st.session_state['responses']["personalized_learning_assistant"] = personalized_learning_assistant(topic)
+                st.session_state['responses']["personalized_learning_assistant"] = personalized_learning_assistant(topic)
             else:
-                st.session_state['responses']["personalized_learning_assistant"] = "Please enter a topic to get started on your learning adventure! 📚"
+                st.session_state['responses']["personalized_learning_assistant"] = "Please enter a topic."
     
-    st.markdown("<div class='response-area'>", unsafe_allow_html=True)
-    st.markdown("### Your Personalized Learning Plan:")
-    st.markdown(st.session_state['responses']["personalized_learning_assistant"])
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.text_area("Response", value=st.session_state['responses']["personalized_learning_assistant"], height=200, key="personalized_learning_assistant")
 
 elif selected_task == "🤖 AI Coding Mentor":
-    st.markdown("""
-    <div class='tool-card'>
-        <h3><span class='emoji'>💻</span>Get Expert Code Review</h3>
-        <p>Paste your code snippet below, and our AI mentor will provide insightful suggestions and improvements!</p>
-    </div>
-    """, unsafe_allow_html=True)
-    code_snippet = st.text_area("Paste your code here for review 👨‍💻")
+    code_snippet = st.text_area("Enter the AI code snippet for review:")
     col1, col2 = st.columns([1, 3])
     with col1:
-        if st.button("🧹 Clear"):
+        if st.button("Clear"):
             st.session_state['responses']["ai_coding_mentor"] = ""
             st.rerun()
     with col2:
-        if st.button("🔍 Analyze Code"):
+        if st.button("Get Code Review"):
             if code_snippet:
-                with st.spinner("Analyzing your code with AI precision..."):
-                    st.session_state['responses']["ai_coding_mentor"] = ai_coding_mentor(code_snippet)
+                st.session_state['responses']["ai_coding_mentor"] = ai_coding_mentor(code_snippet)
             else:
-                st.session_state['responses']["ai_coding_mentor"] = "Please enter a code snippet for our AI to review and enhance! 🖥️"
+                st.session_state['responses']["ai_coding_mentor"] = "Please enter a code snippet."
     
-    st.markdown("<div class='response-area'>", unsafe_allow_html=True)
-    st.markdown("### AI Code Review Results:")
-    st.code(st.session_state['responses']["ai_coding_mentor"])
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.text_area("Response", value=st.session_state['responses']["ai_coding_mentor"], height=200, key="ai_coding_mentor")
 
 elif selected_task == "📄 Smart Document Summarizer":
-    st.markdown("""
-    <div class='tool-card'>
-        <h3><span class='emoji'>📚</span>Summarize Any Document</h3>
-        <p>Paste your document text, and watch as our AI distills it into a concise, informative summary!</p>
-    </div>
-    """, unsafe_allow_html=True)
-    document_text = st.text_area("Paste your document text here 📝")
+    document_text = st.text_area("Paste the document text here:")
     col1, col2 = st.columns([1, 3])
     with col1:
-        if st.button("🧹 Clear"):
+        if st.button("Clear"):
             st.session_state['responses']["smart_document_summarizer"] = ""
             st.rerun()
     with col2:
-        if st.button("📊 Summarize"):
+        if st.button("Summarize Document"):
             if document_text:
-                with st.spinner("Condensing your document into a brilliant summary..."):
-                    st.session_state['responses']["smart_document_summarizer"] = smart_document_summarizer(document_text)
+                st.session_state['responses']["smart_document_summarizer"] = smart_document_summarizer(document_text)
             else:
-                st.session_state['responses']["smart_document_summarizer"] = "Please paste a document for our AI to summarize! 📄"
+                st.session_state['responses']["smart_document_summarizer"] = "Please paste the document text."
     
-    st.markdown("<div class='response-area'>", unsafe_allow_html=True)
-    st.markdown("### Your Document Summary:")
-    st.markdown(st.session_state['responses']["smart_document_summarizer"])
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.text_area("Response", value=st.session_state['responses']["smart_document_summarizer"], height=200, key="smart_document_summarizer")
 
 elif selected_task == "🗓 Interactive Study Planner":
-    st.markdown("""
-    <div class='tool-card'>
-        <h3><span class='emoji'>📅</span>Plan Your Study Schedule</h3>
-        <p>Input your exam dates and subjects, and let our AI create a tailored study plan to maximize your success!</p>
-    </div>
-    """, unsafe_allow_html=True)
-    exam_schedule = st.text_area("Enter your exam schedule (e.g., 'Math: May 15, Physics: May 20') 📆")
+    exam_schedule = st.text_area("Enter your exam schedule:")
     col1, col2 = st.columns([1, 3])
     with col1:
-        if st.button("🧹 Clear"):
+        if st.button("Clear"):
             st.session_state['responses']["interactive_study_planner"] = ""
             st.rerun()
     with col2:
-        if st.button("🎯 Create Study Plan"):
+        if st.button("Generate Study Plan"):
             if exam_schedule:
-                with st.spinner("Crafting your personalized study strategy..."):
-                    st.session_state['responses']["interactive_study_planner"] = interactive_study_planner(exam_schedule)
+                st.session_state['responses']["interactive_study_planner"] = interactive_study_planner(exam_schedule)
             else:
-                st.session_state['responses']["interactive_study_planner"] = "Please enter your exam schedule to get a customized study plan! 📚"
+                st.session_state['responses']["interactive_study_planner"] = "Please enter your exam schedule."
     
-    st.markdown("<div class='response-area'>", unsafe_allow_html=True)
-    st.markdown("### Your Personalized Study Plan:")
-    st.markdown(st.session_state['responses']["interactive_study_planner"])
-    st.markdown("</div>", unsafe_allow_html=True)
-
-
-
+    st.text_area("Response", value=st.session_state['responses']["interactive_study_planner"], height=200, key="interactive_study_planner")
 
 elif selected_task == "❓ Real-Time Q&A Support":
-        st.markdown("""
-        <div class='tool-card'>
-            <h3><span class='emoji'>🤔</span>Ask Anything, Anytime</h3>
-            <p>Got a burning question? Our AI is ready to provide instant, accurate answers to fuel your curiosity!</p>
-        </div>
-        """, unsafe_allow_html=True)
-        question = st.text_input("What's your question? 🧐")
-        col1, col2 = st.columns([1, 3])
-        with col1:
-            if st.button("🧹 Clear"):
-                st.session_state['responses']["real_time_qa_support"] = ""
-                st.rerun()
-        with col2:
-            if st.button("💡 Get Answer"):
-                if question:
-                    with st.spinner("Searching the depths of knowledge for your answer..."):
-                        st.session_state['responses']["real_time_qa_support"] = real_time_qa_support(question)
-                else:
-                    st.session_state['responses']["real_time_qa_support"] = "Please ask a question to unlock the wisdom of our AI! 🔓"
-        
-        st.markdown("<div class='response-area'>", unsafe_allow_html=True)
-        st.markdown("### Your Answer:")
-        st.markdown(st.session_state['responses']["real_time_qa_support"])
-        st.markdown("</div>", unsafe_allow_html=True)
+    question = st.text_input("Enter your academic question:")
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        if st.button("Clear"):
+            st.session_state['responses']["real_time_qa_support"] = ""
+            st.rerun()
+    with col2:
+        if st.button("Get Answer"):
+            if question:
+                st.session_state['responses']["real_time_qa_support"] = real_time_qa_support(question)
+            else:
+                st.session_state['responses']["real_time_qa_support"] = "Please enter a question."
+    
+    st.text_area("Response", value=st.session_state['responses']["real_time_qa_support"], height=200, key="real_time_qa_support")
 
-    elif selected_task == "💬 Mental Health Check-In":
-        st.markdown("""
-        <div class='tool-card'>
-            <h3><span class='emoji'>🌈</span>Your Emotional Wellness Companion</h3>
-            <p>Share how you're feeling, and let our AI provide supportive advice and resources for your mental well-being.</p>
-        </div>
-        """, unsafe_allow_html=True)
-        feelings = st.text_input("How are you feeling today? 💭")
-        col1, col2 = st.columns([1, 3])
-        with col1:
-            if st.button("🧹 Clear"):
-                st.session_state['responses']["mental_health_check_in"] = ""
-                st.rerun()
-        with col2:
-            if st.button("🤗 Get Support"):
-                if feelings:
-                    with st.spinner("Analyzing your emotions with care and empathy..."):
-                        st.session_state['responses']["mental_health_check_in"] = mental_health_check_in(feelings)
-                else:
-                    st.session_state['responses']["mental_health_check_in"] = "Please share how you're feeling so we can offer personalized support. 💖"
-        
-        st.markdown("<div class='response-area'>", unsafe_allow_html=True)
-        st.markdown("### Your Personalized Support:")
-        st.markdown(st.session_state['responses']["mental_health_check_in"])
-        st.markdown("</div>", unsafe_allow_html=True)
+elif selected_task == "💬 Mental Health Check-In":
+    feelings = st.text_input("How are you feeling today?")
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        if st.button("Clear"):
+            st.session_state['responses']["mental_health_check_in"] = ""
+            st.rerun()
+    with col2:
+        if st.button("Get Advice"):
+            if feelings:
+                st.session_state['responses']["mental_health_check_in"] = mental_health_check_in(feelings)
+            else:
+                st.session_state['responses']["mental_health_check_in"] = "Please enter your feelings."
+    
+    st.text_area("Response", value=st.session_state['responses']["mental_health_check_in"], height=200, key="mental_health_check_in")
 
-    # Animated background
-    st.markdown("""
-    <div class="stApp">
-        <div class="animated-bg"></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Footer with contact information
-    st.markdown("""
+# Footer with contact information
+st.markdown("""
     <div class="footer">
         <a href="https://github.com/muhammadibrahim313" target="_blank"><i class="fab fa-github"></i> GitHub</a>
         <a href="https://www.linkedin.com/in/muhammad-ibrahim-qasmi-9876a1297/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
         <a href="https://github.com/Ahmad-Fakhar" target="_blank"><i class="fab fa-github"></i> Partner's GitHub</a>
         <a href="https://www.linkedin.com/in/ahmad-fakhar-357742258/" target="_blank"><i class="fab fa-linkedin"></i> Partner's LinkedIn</a>
     </div>
-    """, unsafe_allow_html=True)
-
-    # Add some playful elements
-    st.balloons()
-
-    # Display a random inspirational quote
-    quotes = [
-        "The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice. - Brian Herbert",
-        "Education is the passport to the future, for tomorrow belongs to those who prepare for it today. - Malcolm X",
-        "The beautiful thing about learning is that nobody can take it away from you. - B.B. King",
-        "The more that you read, the more things you will know. The more that you learn, the more places you'll go. - Dr. Seuss",
-        "Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi"
-    ]
-    st.sidebar.markdown(f"### 💡 Quote of the Day\n\n*{random.choice(quotes)}*")
-
-if __name__ == "__main__":
-    main()
-    
+""", unsafe_allow_html=True)
