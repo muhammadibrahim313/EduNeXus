@@ -42,6 +42,26 @@ def clear_session_state():
         if key in ['personalized_learning_assistant', 'ai_coding_mentor', 'smart_document_summarizer', 'interactive_study_planner', 'real_time_qa_support', 'mental_health_check_in']:
             st.session_state[key] = ""
 
+
+import streamlit as st
+
+# Apply custom CSS for input and text area fields
+st.markdown("""
+<style>
+    .stTextInput, .stTextArea {
+        color: black; /* Set the text color to black for better visibility */
+        background-color: white; /* Ensure the background is white */
+        font-size: 16px; /* Optional: Adjust font size for better readability */
+    }
+    .stTextInput::placeholder, .stTextArea::placeholder {
+        color: #888888; /* Set the placeholder text color */
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Your Streamlit code continues below...
+
+
 # Function to load custom CSS
 def load_css():
     return """
@@ -346,6 +366,8 @@ elif selected_task == "💬 Mental Health Check-In":
     st.markdown("### Mental Health Support:")
     st.markdown(st.session_state['responses']["mental_health_check_in"])
     st.markdown("</div>", unsafe_allow_html=True)
+
+
 
 # Footer
 st.markdown("""
