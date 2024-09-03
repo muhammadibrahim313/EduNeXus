@@ -109,7 +109,7 @@ def load_css():
     
     .stTextInput > div > div > input,
     .stTextArea > div > div > textarea {
-        background-color: red;
+        background-color: #818f8f;
         border: 2px solid rgba(255, 255, 255, 0.5);
         border-radius: 10px;
         color: #ffffff;
