@@ -341,7 +341,7 @@ elif selected_task == "❓ Real-Time Q&A Support":
         st.markdown(st.session_state['responses']["real_time_qa_support"])
         st.markdown("</div>", unsafe_allow_html=True)
 
-    elif selected_task == "💬 Mental Health Check-In":
+elif selected_task == "💬 Mental Health Check-In":
         st.markdown("""
         <div class='tool-card'>
             <h3><span class='emoji'>🌈</span>Your Emotional Wellness Companion</h3>
