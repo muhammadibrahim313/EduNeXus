@@ -203,6 +203,8 @@ def load_css():
     </style>
     """
 
+st.markdown(load_css(), unsafe_allow_html=True)
+
 def display_learning_assistant():
     st.markdown("""
     <div class='tool-card'>
@@ -240,7 +242,7 @@ def display_coding_mentor():
     </div>
     """, unsafe_allow_html=True)
     
-    code_snippet = st.text_area("Paste your code here for review 👨‍💻", height=200)
+    code_snippet = st.text_area("Paste your code here for review 👨‍💻", height=150)
     col1, col2 = st.columns([1, 3])
     
     with col1:
@@ -248,12 +250,12 @@ def display_coding_mentor():
             st.session_state['responses']["ai_coding_mentor"] = ""
             st.rerun()
     with col2:
-        if st.button("🚀 Review Code"):
+        if st.button("🚀 Analyze Code"):
             if code_snippet:
-                with st.spinner("Reviewing your code..."):
+                with st.spinner("Analyzing your code..."):
                     st.session_state['responses']["ai_coding_mentor"] = ai_coding_mentor(code_snippet)
             else:
-                st.session_state['responses']["ai_coding_mentor"] = "Please paste your code to get started! 📜"
+                st.session_state['responses']["ai_coding_mentor"] = "Please paste your code to get feedback! 📃"
     
     if st.session_state['responses']["ai_coding_mentor"]:
         st.markdown("<div class='response-card'>", unsafe_allow_html=True)
@@ -264,12 +266,12 @@ def display_coding_mentor():
 def display_document_summarizer():
     st.markdown("""
     <div class='tool-card'>
-        <h3><span class='emoji'>📄</span>Smart Document Summarizer</h3>
-        <p>Paste your document text here, and let our AI provide a concise summary!</p>
+        <h3><span class='emoji'>📝</span>Smart Document Summarizer</h3>
+        <p>Summarize your documents efficiently with key points and insights.</p>
     </div>
     """, unsafe_allow_html=True)
     
-    document_text = st.text_area("Paste your document text here 📖", height=200)
+    document_text = st.text_area("Paste your document text here for summarization 📄", height=150)
     col1, col2 = st.columns([1, 3])
     
     with col1:
@@ -282,7 +284,7 @@ def display_document_summarizer():
                 with st.spinner("Summarizing your document..."):
                     st.session_state['responses']["smart_document_summarizer"] = smart_document_summarizer(document_text)
             else:
-                st.session_state['responses']["smart_document_summarizer"] = "Please paste your document text to get started! 📝"
+                st.session_state['responses']["smart_document_summarizer"] = "Please paste your document text to summarize! 📑"
     
     if st.session_state['responses']["smart_document_summarizer"]:
         st.markdown("<div class='response-card'>", unsafe_allow_html=True)
@@ -294,11 +296,11 @@ def display_study_planner():
     st.markdown("""
     <div class='tool-card'>
         <h3><span class='emoji'>📅</span>Interactive Study Planner</h3>
-        <p>Input your exam schedule, and our AI will create a tailored study plan!</p>
+        <p>Plan your study schedule effectively with our AI-powered planner!</p>
     </div>
     """, unsafe_allow_html=True)
     
-    exam_schedule = st.text_area("Enter your exam schedule here (Subject, Date) 📅", height=200)
+    exam_schedule = st.text_area("Enter your exam schedule here (e.g., dates and subjects) 🗓️", height=150)
     col1, col2 = st.columns([1, 3])
     
     with col1:
@@ -319,15 +321,15 @@ def display_study_planner():
         st.markdown(st.session_state['responses']["interactive_study_planner"])
         st.markdown("</div>", unsafe_allow_html=True)
 
-def display_qa_support():
+def display_real_time_qa():
     st.markdown("""
     <div class='tool-card'>
-        <h3><span class='emoji'>❓</span>Real-Time Q&A Support</h3>
-        <p>Ask any question and get instant, informative answers!</p>
+        <h3><span class='emoji'>❓</span>Real-time Q&A Support</h3>
+        <p>Get instant answers to your queries with detailed explanations!</p>
     </div>
     """, unsafe_allow_html=True)
     
-    question = st.text_input("What question do you have? 🧐")
+    question = st.text_input("Ask your question here 🤷‍♂️")
     col1, col2 = st.columns([1, 3])
     
     with col1:
@@ -340,7 +342,7 @@ def display_qa_support():
                 with st.spinner("Fetching your answer..."):
                     st.session_state['responses']["real_time_qa_support"] = real_time_qa_support(question)
             else:
-                st.session_state['responses']["real_time_qa_support"] = "Please enter your question to get started! 🤔"
+                st.session_state['responses']["real_time_qa_support"] = "Please ask a question to get an answer! 💬"
     
     if st.session_state['responses']["real_time_qa_support"]:
         st.markdown("<div class='response-card'>", unsafe_allow_html=True)
@@ -348,15 +350,15 @@ def display_qa_support():
         st.markdown(st.session_state['responses']["real_time_qa_support"])
         st.markdown("</div>", unsafe_allow_html=True)
 
-def display_mental_health_checkin():
+def display_mental_health_check():
     st.markdown("""
     <div class='tool-card'>
         <h3><span class='emoji'>🧠</span>Mental Health Check-In</h3>
-        <p>Express your feelings, and receive supportive advice!</p>
+        <p>Share your feelings, and receive empathetic support and advice!</p>
     </div>
     """, unsafe_allow_html=True)
     
-    feelings = st.text_area("How are you feeling today? 🥲", height=200)
+    feelings = st.text_area("How are you feeling today? 😟", height=150)
     col1, col2 = st.columns([1, 3])
     
     with col1:
@@ -369,7 +371,7 @@ def display_mental_health_checkin():
                 with st.spinner("Providing support..."):
                     st.session_state['responses']["mental_health_check_in"] = mental_health_check_in(feelings)
             else:
-                st.session_state['responses']["mental_health_check_in"] = "Please share your feelings to get started! 💬"
+                st.session_state['responses']["mental_health_check_in"] = "Please share your feelings to receive support! ❤️"
     
     if st.session_state['responses']["mental_health_check_in"]:
         st.markdown("<div class='response-card'>", unsafe_allow_html=True)
@@ -377,25 +379,14 @@ def display_mental_health_checkin():
         st.markdown(st.session_state['responses']["mental_health_check_in"])
         st.markdown("</div>", unsafe_allow_html=True)
 
-# Display CSS styles
-html(load_css(), height=0)
-
-# App title
+# Display the sections
 st.markdown("<h1 class='main-title'>Welcome to EduNexus 🚀</h1>", unsafe_allow_html=True)
-
-# Display each tool
 display_learning_assistant()
 display_coding_mentor()
 display_document_summarizer()
 display_study_planner()
-display_qa_support()
-display_mental_health_checkin()
+display_real_time_qa()
+display_mental_health_check()
 
-# Footer
-st.markdown("""
-<div class='footer'>
-    <p>Created with ❤️ by Your Name</p>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Terms of Service</a>
-</div>
-""", unsafe_allow_html=True)
+# Footer section
+st.markdown("<div class='footer'><p>Made with ❤️ by EduNexus Team</p></div>", unsafe_allow_html=True)
